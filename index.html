@@ -4,211 +4,525 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Date?</title>
-    <link rel="stylesheet" href="style.css">
 
-    
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&display=swap');
 
-        @import url('https://fonts.googleapis.com/css2?family=Bellota+Text:ital,wght@1,300&family=Poppins:wght@400;700&family=Roboto:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Bellota Text', sans-serif;
+        }
 
-        *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Bellota Text', sans-serif;
-    
-}
-body, html{
-    width: 100%;
-    height: 100vh;
-    background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
+        body,
+        html {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: url("https://img.freepik.com/free-vector/cloud-background-vector-cute-desktop-wallpaper_53876-136885.jpg?w=826&t=st=1704789857~exp=1704790457~hmac=381926ab355f58892a476af4dd9c1b104192572bd7b1a38ac49528094d2ec6ce");
+            background-size: cover;
+            background-position: center;
+        }
 
-    background-size:cover;
-}
+        body {
+            display: grid;
+            place-items: center;
+            padding: 24px 12px;
+        }
 
-.confirmation{
-    display: none;
-    width: 400px;
-    height: 500px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    /* padding-top: 50px; */
-}
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.08;
+            text-shadow: 0 3px 6px rgb(147, 77, 77);
+        }
 
-.confirmation h1{
-    font-style: bolder;
-    font-size: 50px;
-    font-weight: 700;
-    text-shadow: 0px 3px 6px rgb(147, 77, 77);
-    line-height: 90px;
-}
+        button {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
 
-.fix-gif{
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.28), 0 10px 22px rgba(147, 77, 77, 0.18);
+        }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    height: 200px;
-    
+        .container,
+        .confirmation,
+        .planner {
+            width: min(420px, 100%);
+            text-align: center;
+            animation: popIn 0.55s ease;
+        }
 
-}
+        .confirmation,
+        .planner {
+            display: none;
+        }
 
-.fix-gifimg{
-    border-radius: 10px;
-    width: 384px;
-    height: 216px;
-    background-image: url("https://media1.tenor.com/m/2VprHA868S8AAAAC/yummy-desserts-desserts-milk-mocha.gif");
-    background-size: cover; 
-}
+        .container {
+            position: relative;
+            min-height: 580px;
+        }
 
-.container h1{
-    margin-bottom: 20px;
-    margin-top: 50px;
-    font-style: bolder;
-    font-size: 50px;
-    font-weight: 700;
-    text-shadow: 0px 3px 6px rgb(147, 77, 77);
-}
+        .question {
+            margin-bottom: 18px;
+        }
 
-#fix{
-    margin-top: 30px;
-        border: none;
-        width: 400px;
-        height: 50px;
-        font-size: 30px;
-        border-radius: 10px;
-        background: none;
-        backdrop-filter: blur(5px);
-        border: 1px solid black;
-        font-weight: 550;
-}
-.container{
-    width: 400px;
-    height: 500px;
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    
-}
+        .gif,
+        .fix-gif,
+        .sad-gif,
+        .planner-gif {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
 
-.gif{
+        .gif {
+            height: 300px;
+        }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    height: 300px;
-    
+        .fix-gif,
+        .sad-gif,
+        .planner-gif {
+            height: 220px;
+        }
 
-}
+        .gifimg,
+        .fix-gifimg,
+        .sad-gifimg,
+        .planner-gifimg {
+            border: 2px solid rgba(67, 36, 36, 0.42);
+            border-radius: 12px;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 0 14px 30px rgba(107, 55, 55, 0.18);
+        }
 
-.gifimg{
-    border-radius: 10px;
-    width: 384px;
-    height: 254px;
-    background-image: url("https://media1.tenor.com/m/UAFrdZCt29YAAAAC/milk-and-mocha-waiting-for-reply.gif");
-    background-size: cover; 
-}
+        .gifimg {
+            width: 384px;
+            height: 254px;
+            background-image: url("https://media1.tenor.com/m/UAFrdZCt29YAAAAC/milk-and-mocha-waiting-for-reply.gif");
+        }
 
-.answer-box{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    /* background-color: black; */
-    padding: 10px;
-    margin-top: 5px;
-    width: 100%;
-    height: 80px;
-    gap: 50px;
-}
+        .fix-gifimg {
+            width: 384px;
+            height: 216px;
+            background-image: url("https://media1.tenor.com/m/2VprHA868S8AAAAC/yummy-desserts-desserts-milk-mocha.gif");
+        }
 
-.answer{
-    border: none;
-    width: 100px;
-    height: 50px;
-    font-size: 30px;
-    border-radius: 10px;
-    background: none;
-    backdrop-filter: blur(5px);
-    border: 1px solid black;
-    font-weight: 550;
-    
-}
-.answer:hover{
-    box-shadow: inset 0px 3px 6px rgba(0, 0, 0, 0.449);
-}
+        .sad-gifimg {
+            width: 320px;
+            height: 220px;
+            background-image: url("https://media1.tenor.com/m/UAFrdZCt29YAAAAC/milk-and-mocha-waiting-for-reply.gif");
+        }
 
-@media screen and (max-width: 600px){
-    .container{
-        width: 100%;
-    }
-    .container h1{
-        margin-top: 20px;
-        padding: 8px;
-        font-size: 35px;
-    }
-    .answer{
-        font-size: 20px;
-        padding: 5px;
-    }
-    .gifimg{
-        border-radius: 10px;
-        width: 300px;
-        height: 198px;
-        background-image: url("https://media1.tenor.com/m/UAFrdZCt29YAAAAC/milk-and-mocha-waiting-for-reply.gif");
-        background-size: cover; 
-    }
-    .fix-gif{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width:100%;
-        height: 200px;
-        
-    
-    }
-    
-    .fix-gifimg{
-        border-radius: 10px;
-        width: 300px;
-        height: 168px;
-        background-image: url("https://media1.tenor.com/m/2VprHA868S8AAAAC/yummy-desserts-desserts-milk-mocha.gif");
-        background-size: cover; 
-    }
+        .planner-gifimg {
+            width: 320px;
+            height: 212px;
+            background-image: url("https://tenor.com/view/mamegoma-baby-seal-in-love-gif-12912217.gif");
+        }
 
-    #fix{
-        margin-top: 30px;
-            border: none;
-            width: 250px;
-            height: 50px;
-            font-size: 30px;
+        .answer-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            min-height: 90px;
+            gap: 48px;
+        }
+
+        .answer,
+        .date-choice,
+        .save-date {
+            border: 1px solid rgba(32, 21, 21, 0.8);
             border-radius: 10px;
-            background: none;
-            backdrop-filter: blur(5px);
-            border: 1px solid black;
-            font-weight: 550;
-    }
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(6px);
+            font-weight: 700;
+            color: #2e1f1f;
+        }
 
-    .confirmation{
-        display: none;
-        width: 100%;
-        height: 500px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        text-align: center;
-    }
-}
+        .answer {
+            width: 108px;
+            height: 52px;
+            font-size: 28px;
+        }
 
-    
-    </style>
+        #yes {
+            background: rgba(255, 214, 229, 0.52);
+        }
+
+        #no {
+            z-index: 5;
+        }
+
+        #fix {
+            width: min(400px, 100%);
+            height: 54px;
+            margin-top: 24px;
+            font-size: 28px;
+        }
+
+        .no-drama {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            background: rgba(46, 31, 31, 0.28);
+            backdrop-filter: blur(3px);
+        }
+
+        .no-drama.show {
+            display: block; /* Use block to allow absolute positioning of child popups */
+        }
+
+        .no-popup {
+            position: absolute;
+            width: min(290px, 90%);
+            padding: 16px 12px 16px;
+            border: 2px solid rgba(143, 70, 70, 0.5);
+            border-radius: 16px;
+            background: rgba(255, 241, 247, 0.96);
+            box-shadow: 0 18px 44px rgba(67, 36, 36, 0.25);
+            animation: tearyShake 0.9s ease infinite;
+            display: none;
+        }
+
+        #no-popup-1 { animation-delay: 0s; }
+        #no-popup-2 { animation-delay: 0.25s; }
+        #no-popup-3 { animation-delay: 0.5s; }
+
+        .sad-gif-item {
+            width: 100%;
+            height: 180px;
+            margin-top: 8px;
+            border: 2px solid rgba(67, 36, 36, 0.42);
+            border-radius: 12px;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 0 8px 20px rgba(107, 55, 55, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .sad-gif-item:hover {
+            transform: scale(1.04);
+        }
+
+        /* ==========================================
+           GIF IMAGES FOR THE 3 POPUPS (CUSTOMIZE HERE)
+           ========================================== */
+
+        /* First Popup GIF */
+        .gif1 {
+            background-image: url("https://media.tenor.com/zVIuMvOBOwcAAAAC/what-confused.gif");
+        }
+
+        /* Second Popup GIF */
+        .gif2 {
+            background-image: url("https://media.tenor.com/xO0dLMENbOgAAAAC/brown-bear.gif");
+        }
+
+        /* Third Popup GIF */
+        .gif3 {
+            background-image: url("https://media.tenor.com/jaYons4nmaEAAAAC/%EC%B2%A0%ED%91%B8%EB%8D%95%EB%86%8D%EB%8B%B4%EA%B3%B0-joke-bear.gif");
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(143, 70, 70, 0.55);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.72);
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .no-drama h2 {
+            margin-bottom: 8px;
+            padding: 0 34px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: #8f4646;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
+        }
+
+        .planner {
+            padding: 8px 0;
+        }
+
+        .planner h1 {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .date-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 18px 0;
+        }
+
+        .option-preview {
+            overflow: hidden;
+            border: 1px solid rgba(32, 21, 21, 0.66);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 14px 30px rgba(107, 55, 55, 0.14);
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+        }
+
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(32, 21, 21, 0.65);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.72);
+            transform: translateY(-50%);
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .carousel-btn:hover {
+            transform: translateY(-50%) scale(1.04);
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        .preview-caption {
+            padding: 10px 12px 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #4c3030;
+        }
+
+        .date-choice {
+            width: 100%;
+            min-height: 62px;
+            padding: 10px 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 17px;
+            text-align: left;
+        }
+
+        .date-choice span {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.78;
+        }
+
+        .date-choice.selected {
+            background: rgba(255, 205, 220, 0.74);
+            border-color: #8f4646;
+            transform: scale(1.02);
+        }
+
+        .date-form {
+            display: grid;
+            gap: 10px;
+        }
+
+        .date-form input,
+        .date-form select,
+        .date-form textarea {
+            width: 100%;
+            border: 1px solid rgba(32, 21, 21, 0.65);
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.5);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: #2e1f1f;
+            outline: none;
+        }
+
+        .date-form textarea {
+            min-height: 76px;
+            resize: vertical;
+        }
+
+        .save-date {
+            width: 100%;
+            min-height: 54px;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            background: rgba(255, 214, 229, 0.7);
+        }
+
+        .status {
+            min-height: 26px;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: #5f3434;
+        }
+
+        .floating-heart {
+            position: fixed;
+            bottom: -20px;
+            pointer-events: none;
+            animation: floatHeart 4s linear forwards;
+            font-family: 'Poppins', sans-serif;
+            font-size: 22px;
+            color: #d94f79;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.85);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes tearyShake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-1.4deg);
+            }
+            75% {
+                transform: rotate(1.4deg);
+            }
+        }
+
+        @keyframes floatHeart {
+            from {
+                opacity: 0;
+                transform: translateY(0) scale(0.8);
+            }
+            12% {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-110vh) scale(1.25);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 18px 10px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .container {
+                min-height: 540px;
+            }
+
+            .gif {
+                height: 230px;
+            }
+
+            .gifimg {
+                width: 300px;
+                height: 198px;
+            }
+
+            .fix-gif,
+            .sad-gif,
+            .planner-gif {
+                height: 188px;
+            }
+
+            .fix-gifimg {
+                width: 300px;
+                height: 168px;
+            }
+
+            .sad-gifimg {
+                width: 280px;
+                height: 190px;
+            }
+
+            .planner-gifimg {
+                width: 280px;
+                height: 185px;
+            }
+
+            .answer-box {
+                gap: 28px;
+            }
+
+            .answer {
+                width: 94px;
+                height: 48px;
+                font-size: 20px;
+            }
+
+            #fix {
+                width: min(300px, 100%);
+                font-size: 22px;
+            }
+
+            .planner h1 {
+                font-size: 31px;
+            }
+
+            /* Responsive 3 GIF Popups on mobile */
+            .no-drama.show {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                gap: 16px !important;
+                overflow-y: auto !important;
+                padding: 30px 10px !important;
+            }
+
+            .no-popup {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+                width: 100% !important;
+                max-width: 290px !important;
+                margin: 0 auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -220,56 +534,414 @@ body, html{
             <div class="gifimg"></div>
         </div>
         <div class="answer-box">
-                <button class="answer" id="yes">Yes!!!</button>
-                <button class="answer" id="no">No</button>
+            <button class="answer" id="yes">Yes!!!</button>
+            <button class="answer" id="no">No</button>
         </div>
-        
     </div>
+
+    <!-- =======================================================
+         START OF THE 3 ANNOYING POPUPS (EACH HAS ITS OWN GIF)
+         ======================================================= -->
+    <div class="no-drama" id="no-drama">
+        <!-- Annoying Popup 1 (GIF 1) -->
+        <div class="no-popup" id="no-popup-1">
+            <button class="close-popup" aria-label="Close popup">x</button>
+            <h2>Why why whyyy?</h2>
+            <div class="sad-gif-item gif1"></div>
+        </div>
+
+        <!-- Annoying Popup 2 (GIF 2) -->
+        <div class="no-popup" id="no-popup-2">
+            <button class="close-popup" aria-label="Close popup">x</button>
+            <h2>Please say yes na...</h2>
+            <div class="sad-gif-item gif2"></div>
+        </div>
+
+        <!-- Annoying Popup 3 (GIF 3) -->
+        <div class="no-popup" id="no-popup-3">
+            <button class="close-popup" aria-label="Close popup">x</button>
+            <h2>Huhu debug crying!</h2>
+            <div class="sad-gif-item gif3"></div>
+        </div>
+    </div>
+    <!-- =======================================================
+         END OF THE 3 ANNOYING POPUPS
+         ======================================================= -->
 
     <div class="confirmation">
         <h1>Yayyyyyyyy!!! Finally</h1>
-            <div class="question">
-                <div class="fix-gif">
-                    <div class="fix-gifimg"></div>
-                </div>
-                <!-- <a href="https://wa.me/+918595790116?text='Chalo date pr chalein!!!!!' ">
-                </a> -->
-                    <button class="answer" id="fix">Let's Fix a date</button>
-                
-            </div>
+        <div class="fix-gif">
+            <div class="fix-gifimg"></div>
+        </div>
+        <button class="answer" id="fix">Let's Fix a date</button>
     </div>
 
+    <div class="planner">
+        <h1>Choose our date plan</h1>
+        <div class="planner-gif">
+            <div class="planner-gifimg"></div>
+        </div>
+        <div class="date-options">
+            <button class="date-choice selected" data-date-type="Lunch Date" data-place="Option 1 - Romantic lunch spot" data-caption="Lunch date options: choose one from the dropdown below." data-places="Option 1 - Romantic lunch spot|Option 2 - Samgyup date|Option 3 - Pasta and pizza place" data-images="https://placehold.co/800x500/ffd6e5/3d2929?text=Lunch+Option+1|https://placehold.co/800x500/f8b7cb/3d2929?text=Lunch+Option+2|https://placehold.co/800x500/fff2bd/3d2929?text=Lunch+Option+3">
+                Lunch Date
+                <span>Pick from lunch place options</span>
+            </button>
+            <button class="date-choice" data-date-type="Coffee Date" data-place="Option 1 - Cozy coffee shop" data-caption="Coffee date options: choose one from the dropdown below." data-places="Option 1 - Cozy coffee shop|Option 2 - Starbucks chill date|Option 3 - Dessert cafe" data-images="https://placehold.co/800x500/c8f4ed/3d2929?text=Coffee+Option+1|https://placehold.co/800x500/e8d2bd/3d2929?text=Coffee+Option+2|https://placehold.co/800x500/fbd5a8/3d2929?text=Coffee+Option+3">
+                Coffee Date
+                <span>Pick from coffee place options</span>
+            </button>
+            <button class="date-choice" data-date-type="Arcade Date" data-place="Option 1 - SM Arcade" data-caption="Arcade date options: choose one from the dropdown below." data-places="Option 1 - SM Arcade|Option 2 - Timezone|Option 3 - Bowling and arcade" data-images="https://placehold.co/800x500/cbd7ff/3d2929?text=Arcade+Option+1|https://placehold.co/800x500/d8c3ff/3d2929?text=Arcade+Option+2|https://placehold.co/800x500/cff2ff/3d2929?text=Arcade+Option+3">
+                Arcade Date
+                <span>Pick from arcade place options</span>
+            </button>
+        </div>
+
+        <div class="option-preview">
+            <div class="carousel">
+                <button class="carousel-btn prev" id="prev-photo" aria-label="Previous photo">&#8249;</button>
+                <img id="date-photo" src="https://placehold.co/800x500/ffd6e5/3d2929?text=Lunch+Option+1" alt="Selected date option photo">
+                <button class="carousel-btn next" id="next-photo" aria-label="Next photo">&#8250;</button>
+            </div>
+            <p class="preview-caption" id="preview-caption">Lunch date options: replace these with your food place pictures.</p>
+        </div>
+
+        <div class="date-form">
+            <select id="place-option" aria-label="Choose place option"></select>
+            <input type="text" id="place" placeholder="Or type custom place here">
+            <input type="date" id="date">
+            <input type="time" id="time">
+            <textarea id="note" placeholder="Sweet note: e.g. I promise ako bahala sa first date hehe"></textarea>
+            <button class="save-date" id="save-date">Save PDF and Message Me</button>
+        </div>
+        <p class="status" id="status"></p>
     </div>
 
     <script>
         const yes = document.querySelector("#yes");
-const no = document.querySelector("#no");
-const confirmation = document.querySelector(".confirmation");
-const container = document.querySelector(".container");
+        const no = document.querySelector("#no");
+        const confirmation = document.querySelector(".confirmation");
+        const container = document.querySelector(".container");
+        const planner = document.querySelector(".planner");
+        const noDrama = document.querySelector("#no-drama");
+        const popups = [
+            document.querySelector("#no-popup-1"),
+            document.querySelector("#no-popup-2"),
+            document.querySelector("#no-popup-3")
+        ];
+        const fix = document.querySelector("#fix");
+        const dateChoices = document.querySelectorAll(".date-choice");
+        const datePhoto = document.querySelector("#date-photo");
+        const previewCaption = document.querySelector("#preview-caption");
+        const prevPhoto = document.querySelector("#prev-photo");
+        const nextPhoto = document.querySelector("#next-photo");
+        const placeOption = document.querySelector("#place-option");
+        const placeInput = document.querySelector("#place");
+        const dateInput = document.querySelector("#date");
+        const timeInput = document.querySelector("#time");
+        const noteInput = document.querySelector("#note");
+        const saveDate = document.querySelector("#save-date");
+        const statusMessage = document.querySelector("#status");
+        const messengerLink = "https://www.facebook.com/messages/e2ee/t/784648027821662";
 
-yesAnswerMethod = () => {
-    container.style.display = 'none'
-    confirmation.style.display = 'block'
-}
+        // ==========================================
+        // CUSTOMIZE YOUR CAROUSEL PHOTOS HERE!
+        // Replace the placeholder URLs with your own picture links or local file paths (e.g., "lunch1.jpg")
+        // ==========================================
+        const DATE_PLANS_CONFIG = {
+            "Lunch Date": {
+                caption: "Lunch date options: replace these with your food place pictures.",
+                places: [
+                    "Option 1 - MangInasal",
+                    "Option 2 - McDonald's",
+                    "Option 3 - Jollibee"
+                ],
+                images: [
+                    "img/inasal.jpg", // <--- PUT YOUR LUNCH PHOTO 1 LINK OR FILENAME HERE
+                    "img/mcdo.png", // <--- PUT YOUR LUNCH PHOTO 2 LINK OR FILENAME HERE
+                    "img/logo-employer-cong-ty-tnhh-jollibee-viet-nam-id_8389-638343698329469597.jpg"  // <--- PUT YOUR LUNCH PHOTO 3 LINK OR FILENAME HERE
+                ]
+            },
+            "Coffee Date": {
+                caption: "Coffee date options: replace these with your coffee place pictures.",
+                places: [
+                    "Option 1 - Bo's Coffee",
+                    "Option 2 - Chapter Coffee Roastery & Cafe ",
+                    "Option 3 - Content Coffee"
+                ],
+                images: [
+                    "img/boscoffe.jpg", // <--- PUT YOUR COFFEE PHOTO 1 LINK OR FILENAME HERE
+                    "img/chapter.jpg", // <--- PUT YOUR COFFEE PHOTO 2 LINK OR FILENAME HERE
+                    "img/content.jpg"  // <--- PUT YOUR COFFEE PHOTO 3 LINK OR FILENAME HERE
+                ]
+            },
+            "Arcade Date": {
+                caption: "Arcade date options: replace these with your arcade play pictures.",
+                places: [
+                    "Option 1 - Magic Arcade",
+                    "Option 2 - Town Center Arcade",
+                    "Option 3 - SM Arcade"
+                ],
+                images: [
+                    "img/pexels-bert-seinstra-62920-35736659.jpg", // <--- PUT YOUR ARCADE PHOTO 1 LINK OR FILENAME HERE
+                    "img/pexels-moo-lens-570152233-36484265.jpg", // <--- PUT YOUR ARCADE PHOTO 2 LINK OR FILENAME HERE
+                    "img/pexels-biravencrow-33327409.jpg"  // <--- PUT YOUR ARCADE PHOTO 3 LINK OR FILENAME HERE
+                ]
+            }
+        };
 
-noAnswerMethod = () => {
-    no.style.position = 'absolute'
+        let noClickCount = 0;
+        let selectedDateType = "Lunch Date";
+        let currentImages = [];
+        let currentPlaces = [];
+        let currentImageIndex = 0;
 
-    xPosition = Math.floor(Math.random() * container.clientWidth)
-    yPosition = Math.floor(Math.random() * container.clientHeight)
+        function yesAnswerMethod() {
+            container.style.display = "none";
+            confirmation.style.display = "block";
+            startHearts();
+        }
 
-    no.style.top = `${yPosition}px`
-    no.style.left = `${xPosition}px`
+        function noAnswerMethod() {
+            noClickCount += 1;
+            no.style.position = "absolute";
 
-}
+            const maxX = Math.max(container.clientWidth - no.offsetWidth, 20);
+            const maxY = Math.max(container.clientHeight - no.offsetHeight, 20);
+            const xPosition = Math.floor(Math.random() * maxX);
+            const yPosition = Math.floor(Math.random() * maxY);
 
-no.addEventListener('click', noAnswerMethod)
-yes.addEventListener('click', yesAnswerMethod)
+            no.style.left = `${xPosition}px`;
+            no.style.top = `${yPosition}px`;
 
-document.getElementById("fix").addEventListener("click", function(){
-    window.location= "https://www.facebook.com/messages/e2ee/t/784648027821662 ";
-}, false);
+            if (noClickCount >= 5) {
+                noDrama.classList.add("show");
+                
+                // Position and show each popup
+                popups.forEach((popup, index) => {
+                    popup.style.display = "block";
+                    if (window.innerWidth > 600) {
+                        // Scatter popups randomly on desktop
+                        const randomTop = Math.floor(Math.random() * 55) + 10; // 10% to 65%
+                        const randomLeft = Math.floor(Math.random() * 60) + 10; // 10% to 70%
+                        popup.style.top = `${randomTop}%`;
+                        popup.style.left = `${randomLeft}%`;
+                        popup.style.transform = "none";
+                    } else {
+                        // On mobile, clear inline styles so CSS media query handles layout
+                        popup.style.top = "";
+                        popup.style.left = "";
+                        popup.style.transform = "";
+                    }
+                });
+            }
+        }
+
+        // Add close event listener to each popup individually
+        popups.forEach((popup) => {
+            const btn = popup.querySelector(".close-popup");
+            btn.addEventListener("click", () => {
+                popup.style.display = "none";
+                
+                // Check if all popups are now hidden
+                const allClosed = popups.every(p => p.style.display === "none");
+                if (allClosed) {
+                    noDrama.classList.remove("show");
+                    noClickCount = 0;
+                }
+            });
+        });
+
+        function showPlanner() {
+            confirmation.style.display = "none";
+            planner.style.display = "block";
+            updateCarousel();
+        }
+
+        function selectDateChoice(event) {
+            dateChoices.forEach((choice) => choice.classList.remove("selected"));
+            event.currentTarget.classList.add("selected");
+            selectedDateType = event.currentTarget.dataset.dateType;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const plan = DATE_PLANS_CONFIG[selectedDateType];
+            currentImages = plan.images;
+            currentPlaces = plan.places;
+            currentImageIndex = 0;
+            placeOption.innerHTML = currentPlaces.map((place, index) => {
+                return `<option value="${index}">${place}</option>`;
+            }).join("");
+            datePhoto.src = currentImages[currentImageIndex];
+            previewCaption.textContent = plan.caption;
+        }
+
+        function setCarouselImage(index) {
+            currentImageIndex = index;
+            datePhoto.src = currentImages[currentImageIndex];
+            placeOption.value = String(currentImageIndex);
+        }
+
+        function moveCarousel(direction) {
+            if (!currentImages.length) {
+                updateCarousel();
+            }
+
+            const nextIndex = (currentImageIndex + direction + currentImages.length) % currentImages.length;
+            setCarouselImage(nextIndex);
+        }
+
+        function selectPlaceOption() {
+            setCarouselImage(Number(placeOption.value));
+        }
+
+        function escapePdfText(text) {
+            return String(text).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+        }
+
+        function makeDatePdf(details) {
+            // Background color: Soft pastel pink
+            let stream = "";
+            stream += "0.99 0.94 0.96 rg 0 0 612 792 re f\n"; // Background
+            stream += "1 0.85 0.90 rg 36 680 540 76 re f\n"; // Header box background
+            
+            // Draw a cute decorative border around the page (3pt width)
+            stream += "3 w 0.90 0.50 0.60 RG 24 24 564 744 re S\n"; 
+            
+            // Details card background (white card)
+            stream += "1 1 1 rg 36 120 540 520 re f\n"; 
+            stream += "1 w 0.95 0.75 0.82 RG 36 120 540 520 re S\n"; 
+
+            // Add Header text
+            stream += "BT /F2 26 Tf 0.56 0.22 0.30 rg 72 712 Td (" + escapePdfText("Our Official Date Plan") + ") Tj ET\n";
+            stream += "BT /F2 11 Tf 0.80 0.40 0.50 rg 72 694 Td (" + escapePdfText("YAY! SHE SAID YES! :)") + ") Tj ET\n";
+
+            // Add rows of details inside the white card
+            const yOffsetStart = 580;
+            const items = [
+                { label: "Date Type:  ", value: details.type },
+                { label: "Place:      ", value: details.place },
+                { label: "Date:       ", value: details.date },
+                { label: "Time:       ", value: details.time }
+            ];
+
+            items.forEach((item, index) => {
+                const y = yOffsetStart - index * 45;
+                // Label (Bold, pinkish-gray)
+                stream += `BT /F2 14 Tf 0.50 0.30 0.35 rg 72 ${y} Td (${escapePdfText(item.label)}) Tj ET\n`;
+                // Value (Regular, dark)
+                stream += `BT /F1 14 Tf 0.15 0.15 0.15 rg 180 ${y} Td (${escapePdfText(item.value)}) Tj ET\n`;
+                // Add a faint separator line below each row
+                stream += `0.95 0.90 0.92 RG 72 ${y - 15} m 540 ${y - 15} l S\n`;
+            });
+
+            // Message box
+            const msgY = yOffsetStart - 4 * 45;
+            stream += `BT /F2 14 Tf 0.50 0.30 0.35 rg 72 ${msgY} Td (Sweet Note:) Tj ET\n`;
+            
+            // Sweet note container
+            stream += `0.98 0.95 0.96 rg 72 ${msgY - 140} 468 120 re f\n`;
+            stream += `1 w 0.90 0.70 0.78 RG 72 ${msgY - 140} 468 120 re S\n`;
+
+            // Draw note text inside the note container (simple line wrapping)
+            const noteText = details.note;
+            const noteLines = [];
+            const maxChars = 52;
+            let currentLine = "";
+            noteText.split(" ").forEach(word => {
+                if ((currentLine + " " + word).length > maxChars) {
+                    noteLines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = currentLine ? currentLine + " " + word : word;
+                }
+            });
+            if (currentLine) noteLines.push(currentLine);
+
+            noteLines.slice(0, 5).forEach((line, index) => {
+                const lineY = msgY - 30 - index * 20;
+                stream += `BT /F1 12 Tf 0.25 0.20 0.22 rg 90 ${lineY} Td (${escapePdfText(line)}) Tj ET\n`;
+            });
+
+            // Footer signature
+            stream += `BT /F2 12 Tf 0.85 0.45 0.55 rg 72 70 Td (${escapePdfText("<3 Prepared with Love")}) Tj ET\n`;
+
+            const objects = [
+                "1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj",
+                "2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj",
+                "3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 6 0 R >> >> /Contents 5 0 R >> endobj",
+                "4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj",
+                `5 0 obj << /Length ${stream.length} >> stream\n${stream}\nendstream endobj`,
+                "6 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj"
+            ];
+
+            let pdf = "%PDF-1.4\n";
+            const offsets = [0];
+            objects.forEach((object) => {
+                offsets.push(pdf.length);
+                pdf += `${object}\n`;
+            });
+
+            const xrefOffset = pdf.length;
+            pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+            offsets.slice(1).forEach((offset) => {
+                pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+            });
+            pdf += `trailer << /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+
+            return new Blob([pdf], { type: "application/pdf" });
+        }
+
+        function downloadDatePdf() {
+            const details = {
+                type: selectedDateType,
+                place: placeInput.value.trim() || currentPlaces[currentImageIndex] || "Cute date place",
+                date: dateInput.value || "To be decided",
+                time: timeInput.value || "To be decided",
+                note: noteInput.value.trim() || "She said yes! Time to make this date official."
+            };
+
+            const pdfBlob = makeDatePdf(details);
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            const downloadLink = document.createElement("a");
+
+            downloadLink.href = pdfUrl;
+            downloadLink.download = `date-plan-${details.type.toLowerCase().replaceAll(" ", "-")}.pdf`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            downloadLink.remove();
+            URL.revokeObjectURL(pdfUrl);
+
+            statusMessage.textContent = "PDF saved. Messenger is opening now, attach the PDF there hehe.";
+            setTimeout(() => {
+                window.location.href = messengerLink;
+            }, 700);
+        }
+
+        function startHearts() {
+            const heartTimer = setInterval(() => {
+                const heart = document.createElement("span");
+                heart.className = "floating-heart";
+                heart.textContent = "\u2665";
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${3 + Math.random() * 2}s`;
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 5000);
+            }, 240);
+
+            setTimeout(() => clearInterval(heartTimer), 5000);
+        }
+
+        no.addEventListener("click", noAnswerMethod);
+        yes.addEventListener("click", yesAnswerMethod);
+        fix.addEventListener("click", showPlanner);
+        dateChoices.forEach((choice) => choice.addEventListener("click", selectDateChoice));
+        prevPhoto.addEventListener("click", () => moveCarousel(-1));
+        nextPhoto.addEventListener("click", () => moveCarousel(1));
+        placeOption.addEventListener("change", selectPlaceOption);
+        saveDate.addEventListener("click", downloadDatePdf);
+        updateCarousel();
     </script>
-    
 </body>
 </html>
